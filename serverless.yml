@@ -1,0 +1,75 @@
+service: serverless-application
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: dev
+  region: us-east-1
+  environment:
+    DYNAMODB_TABLE_NAME: ${self:custom.starsTableName}
+
+custom:
+  starsTableName: stars-table-${self:provider.stage}
+
+plugins:
+  - serverless-iam-roles-per-function
+
+functions:
+  getPost:
+    handler: api.getStar
+    name: get-post
+    memorySize: 128
+    timeout: 5
+    events:
+      - http:
+          path: stars/{starId}
+          method: GET
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:GetItem"
+        Resource: !GetAtt StarsTable.Arn
+  createPost:
+    handler: api.createStar
+    name: create-star
+    memorySize: 128
+    timeout: 5
+    events:
+      - http:
+          path: post
+          method: POST
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:PutItem"
+        Resource: !GetAtt StarsTable.Arn
+  getAllPosts:
+    handler: api.getAllStars
+    name: get-all-stars
+    memorySize: 128
+    timeout: 5
+    events:
+      - http:
+          path: posts
+          method: GET
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:Scan"
+        Resource: !GetAtt StarsTable.Arn
+
+resources:
+  Resources:
+    PostsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.starsTableName}
+        AttributeDefinitions:
+          - AttributeName: starId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: starId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
