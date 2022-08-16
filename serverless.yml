@@ -9,7 +9,7 @@ provider:
     DYNAMODB_TABLE_NAME: ${self:custom.starsTableName}
 
 custom:
-  starsTableName: stars-table-${self:provider.stage}
+  starsTableName: stars
 
 plugins:
   - serverless-iam-roles-per-function
