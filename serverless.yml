@@ -31,7 +31,7 @@ functions:
         Resource: !GetAtt StarsTable.Arn
   createStar:
     handler: api.createStar
-    name: create-star
+    name: create-stars
     memorySize: 128
     timeout: 5
     events:
