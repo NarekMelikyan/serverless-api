@@ -7,6 +7,14 @@ const helpers = require('./helpers');
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 const dynamoTableName = process.env.DYNAMODB_TABLE_NAME;
 
+const getStar = async (event) => {
+    try {
+        return buildResponse(200, event);
+    } catch (e) {
+        return buildResponse(400, e);
+    }
+}
+
 const createStar = async (event) => {
     try {
         const params = {
