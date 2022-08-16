@@ -60,7 +60,7 @@ functions:
 
 resources:
   Resources:
-    PostsTable:
+    StarsTable:
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: ${self:custom.starsTableName}
