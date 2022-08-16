@@ -5,7 +5,7 @@ AWS.config.update({
 const helpers = require('./helpers');
 
 const dynamodb = new AWS.DynamoDB.DocumentClient();
-const dynamoTableName = 'stars-table-dev';
+const dynamoTableName = process.env.DYNAMODB_TABLE_NAME;
 
 const createStar = async (event) => {
     try {
