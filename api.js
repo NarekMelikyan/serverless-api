@@ -9,7 +9,15 @@ const dynamoTableName = process.env.DYNAMODB_TABLE_NAME;
 
 const getStar = async (event) => {
     try {
-        return buildResponse(200, JSON.stringify(event));
+        const params = {
+            TableName: dynamoTableName,
+            Key: {
+                'starId': { S: event.pathParameters.starId }
+            }
+        }
+        const star = await dynamodb.getItem(params).promise();
+
+        return buildResponse(200, star);
     } catch (e) {
         return buildResponse(400, e);
     }
