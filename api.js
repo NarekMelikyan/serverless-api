@@ -7,11 +7,11 @@ const helpers = require('./helpers')
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 const dynamoTableName = 'stars-table-dev';
 
-const createStar = async (requestBody) => {
+const createStar = async (event) => {
     try {
         const params = {
             TableName: dynamoTableName,
-            Item: requestBody
+            Item: event.body
         }
 
         const star = await dynamodb.put(params).promise()
