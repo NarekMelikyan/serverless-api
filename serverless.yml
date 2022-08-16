@@ -15,9 +15,9 @@ plugins:
   - serverless-iam-roles-per-function
 
 functions:
-  getPost:
+  getStar:
     handler: api.getStar
-    name: get-post
+    name: get-star
     memorySize: 128
     timeout: 5
     events:
@@ -29,28 +29,28 @@ functions:
         Action:
           - "dynamodb:GetItem"
         Resource: !GetAtt StarsTable.Arn
-  createPost:
+  createStar:
     handler: api.createStar
     name: create-star
     memorySize: 128
     timeout: 5
     events:
       - http:
-          path: post
+          path: stars
           method: POST
     iamRoleStatements:
       - Effect: "Allow"
         Action:
           - "dynamodb:PutItem"
         Resource: !GetAtt StarsTable.Arn
-  getAllPosts:
+  getAllStars:
     handler: api.getAllStars
     name: get-all-stars
     memorySize: 128
     timeout: 5
     events:
       - http:
-          path: posts
+          path: stars
           method: GET
     iamRoleStatements:
       - Effect: "Allow"

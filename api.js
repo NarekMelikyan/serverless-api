@@ -1,15 +1,13 @@
 const AWS = require('aws-sdk');
 AWS.config.update({
-    region: 'us-east-2'
+    region: 'us-east-1'
 });
 const helpers = require('./helpers')
 
 const dynamodb = new AWS.DynamoDB.DocumentClient();
-const dynamoTableName = 'movie_stars';
-const healthPath = '/health';
-const movieStarsPath = '/stars';
+const dynamoTableName = 'stars-table-dev';
 
-const createPost = async (requestBody) => {
+const createStar = async (requestBody) => {
     try {
         const params = {
             TableName: dynamoTableName,
@@ -24,7 +22,7 @@ const createPost = async (requestBody) => {
     }
 };
 
-const getAllPosts = async (event) => {
+const getAllStars = async (event) => {
     try {
         let allMovieStars;
         if(event.queryStringParameters) {
@@ -60,6 +58,6 @@ const buildResponse = (statusCode, body) => {
 }
 
 module.exports = {
-    createPost,
-    getAllPosts,
+    createStar,
+    getAllStars,
 };
