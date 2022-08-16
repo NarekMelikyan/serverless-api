@@ -9,14 +9,15 @@ const dynamoTableName = 'stars-table-dev';
 
 const createStar = async (event) => {
     try {
-        const params = {
-            TableName: dynamoTableName,
-            Item: event.body
-        }
+        return buildResponse(201, event)
 
-        const star = await dynamodb.put(params).promise()
+        // const params = {
+        //     TableName: dynamoTableName,
+        //     Item: event.body
+        // }
+        //
+        // const star = await dynamodb.put(params).promise()
 
-        return buildResponse(201, star)
     } catch (e) {
         return buildResponse(400, e)
     }
