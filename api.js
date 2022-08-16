@@ -9,7 +9,7 @@ const dynamoTableName = process.env.DYNAMODB_TABLE_NAME;
 
 const getStar = async (event) => {
     try {
-        return buildResponse(200, event);
+        return buildResponse(200, JSON.stringify(event));
     } catch (e) {
         return buildResponse(400, e);
     }
@@ -68,6 +68,7 @@ const buildResponse = (statusCode, body) => {
 };
 
 module.exports = {
+    getStar,
     createStar,
     getAllStars,
 };
