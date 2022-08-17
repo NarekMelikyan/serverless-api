@@ -15,7 +15,7 @@ const getStar = async (event) => {
                 'starId': { S: event.pathParameters.starId }
             }
         }
-        const star = await dynamodb.getItem(params).promise();
+        const star = await dynamodb.get(params).promise();
 
         return buildResponse(200, {
             ...star,
