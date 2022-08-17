@@ -12,16 +12,16 @@ const getStar = async (event) => {
         const params = {
             TableName: dynamoTableName,
             Key: {
-                "starId": { S: event.pathParameters.starId }
+                starId: { S: event.pathParameters.starId }
             }
         }
 
-        const star = await dynamodb.get(params).promise();
-
         return buildResponse(200, {
-            ...star,
-            starId: event.pathParameters.starId
+            ...params,
+            type: typeof event.pathParameters.starId
         });
+
+        // const star = await dynamodb.get(params).promise();
     } catch (e) {
         return buildResponse(400, e);
     }
