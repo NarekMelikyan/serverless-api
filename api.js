@@ -21,7 +21,7 @@ const getStar = async (event) => {
 
         if (_.isEmpty(star)) {
             return buildResponse(404, "There is no such person");
-        };
+        }
 
         return buildResponse(200, star);
     } catch (e) {
