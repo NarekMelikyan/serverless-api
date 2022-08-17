@@ -16,7 +16,7 @@ const getStar = async (event) => {
             }
         }
 
-        const star = await dynamodb.scan(params).promise();
+        const star = await dynamodb.get(params).promise();
 
         return buildResponse(200, {
             ...star,
