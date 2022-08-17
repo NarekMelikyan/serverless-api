@@ -3,6 +3,7 @@ AWS.config.update({
     region: 'us-east-1'
 });
 const helpers = require('./helpers');
+const _ = require('lodash');
 
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 const dynamoTableName = process.env.DYNAMODB_TABLE_NAME;
@@ -14,9 +15,13 @@ const getStar = async (event) => {
             Key: {
                 starId: event.pathParameters.starId
             }
-        }
+        };
 
         const star = await dynamodb.get(params).promise();
+
+        if (_.isEmpty(star)) {
+            return buildResponse(404, "There is no such person");
+        };
 
         return buildResponse(200, star);
     } catch (e) {
